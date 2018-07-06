@@ -1,0 +1,39 @@
+spend=pd.read_csv('spend.csv')
+spend=spend.drop(['Unnamed: 0'],axis=1)
+
+spend.dtypes
+spend['spend_day'] = pd.to_datetime(spend['spend_day'])
+
+###
+# data engineering:
+time=[1,2,3,6] #1Month, 2Month, 3Month, 6Month
+sta=['min','max','mean','std','count']
+#trans=['log','sqrt']
+tp=['g','s','o']
+
+## find days before last day for each transaction
+n=spend.groupby('id')['id'].count() # count each id
+last_time=spend.groupby('id')['spend_day'].max() # find maximum date
+# create the column of last date in spend dataframe
+last_time_list=np.repeat(last_time,n)
+spend=spend.set_index(['id']) 
+spend['last_time']=last_time_list
+spend.reset_index(level=0, inplace=True)
+# find the diffrence between each date and last day
+##spend['last_time']-relativedelta(months=+6)
+spend['days']=[(spend['last_time'].iloc[i]-spend['spend_day'].iloc[i]).days for i in range(len(spend))]
+
+# Do data engineering for spend:
+spend2=pd.DataFrame()
+'''
+for i in trans:
+    spend[i]=[eval('np.'+str(i)+'('+str(x)+')') for x in spend['spend']]
+'''
+for j in time:
+    spend_time = spend.drop(spend[spend.days > j*30].index)
+    for k in tp:
+        for l in sta:
+            spend2['spend_'+str(j)+'m_'+str(k)+'_'+str(l)]=eval("spend_time[spend_time['spend_type']=='"+str(k)+"'].groupby('id')['spend']."+str(l)+"()")
+            spend2['spend_'+str(j)+'m_all_'+str(l)]=eval("spend_time.groupby('id')['spend']."+str(l)+"()")
+
+spend2.to_csv("spend2.csv")               
