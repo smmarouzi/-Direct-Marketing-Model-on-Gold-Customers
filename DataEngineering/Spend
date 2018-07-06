@@ -1,14 +1,7 @@
-spend=pd.read_csv('spend.csv')
-spend=spend.drop(['Unnamed: 0'],axis=1)
-
-spend.dtypes
-spend['spend_day'] = pd.to_datetime(spend['spend_day'])
-
-###
 # data engineering:
 time=[1,2,3,6] #1Month, 2Month, 3Month, 6Month
 sta=['min','max','mean','std','count']
-#trans=['log','sqrt']
+trans=['log','sqrt']
 tp=['g','s','o']
 
 ## find days before last day for each transaction
@@ -25,15 +18,21 @@ spend['days']=[(spend['last_time'].iloc[i]-spend['spend_day'].iloc[i]).days for 
 
 # Do data engineering for spend:
 spend2=pd.DataFrame()
-'''
+#spend[spend['spend']<0]=0
 for i in trans:
-    spend[i]=[eval('np.'+str(i)+'('+str(x)+')') for x in spend['spend']]
-'''
+    spend['spend_'+str(i)]=[eval('np.'+str(i)+'('+str(x)+')') for x in spend['spend']]
 for j in time:
     spend_time = spend.drop(spend[spend.days > j*30].index)
     for k in tp:
         for l in sta:
             spend2['spend_'+str(j)+'m_'+str(k)+'_'+str(l)]=eval("spend_time[spend_time['spend_type']=='"+str(k)+"'].groupby('id')['spend']."+str(l)+"()")
             spend2['spend_'+str(j)+'m_all_'+str(l)]=eval("spend_time.groupby('id')['spend']."+str(l)+"()")
+            for i in trans:
+                spend2['spend_'+str(j)+'m_'+str(k)+'_'+str(l)+'_'+str(i)]=eval("spend_time[spend_time['spend_type']=='"+str(k)+"'].groupby('id')['spend_"+str(i)+"']."+str(l)+"()")
+                spend2['spend_'+str(j)+'m_all_'+str(l)+'_'+str(i)]=eval("spend_time.groupby('id')['spend_"+str(i)+"']."+str(l)+"()")
 
 spend2.to_csv("spend2.csv")               
+
+#import sys
+#sys.float_info.epsilon   
+spend.drop(spend[spend['spend']<=0].index,inplace=True)
