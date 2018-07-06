@@ -5,12 +5,12 @@ The statistical data mining procedures are employed in their ability to meet the
 Improve direct marketing responses rate defined by 'gold' customers by modeling on the marketing target (valuable customers) and key drivers
 
 We have 6 tables:
-  Target
-  Customer
-  Service
-  Coupon
-  Spend
-  Demo_real
+  Target,
+  Customer,
+  Service,
+  Coupon,
+  Spend,
+  Demo_real,
 Because of the size of this tables (Demo_real around 630MB) Unfortunately, I could not attach here even the Sampled table.
 
 there are diffrent stages in this project:
@@ -20,7 +20,7 @@ there are diffrent stages in this project:
   Explore table
   
   Data Cleaning:
-    Modify the Date tables
+    Modify the Date tables,
     Modify the Missing dada
     
   Sampling target dataset:
@@ -35,9 +35,9 @@ there are diffrent stages in this project:
   Modeling
   
   Results:
-    Decile charts
-    Key driver deciles
-    Importance level of key drivers (STD stimation)
+    Decile charts,
+    Key driver deciles,
+    Importance level of key drivers (STD stimation),
     KS and ROC chart
     
     
