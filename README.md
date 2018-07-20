@@ -1,4 +1,4 @@
-# -Direct-Marketing-Model-on-Gold-Customers
+# Direct-Marketing-Model-on-Gold-Customers
 
 The business goal is to analyze the influence of managers' decisions with the design of analysis on customer's behavior via direct marketing. 
 The statistical data mining procedures are employed in their ability to meet the challenge of mining large amounts of profit-driven data. 
