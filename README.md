@@ -11,7 +11,8 @@ Improve direct marketing responses rate defined by 'gold' customers by modeling 
   - Coupon,
   - Spend,
   - Demo_real,
-Because of the size of this tables (Demo_real around 630MB) Unfortunately, I could not attach here even the Sampled table.
+
+  Because of the size of this tables (Demo_real around 630MB) Unfortunately, I could not attach here even the Sampled table.
 
 there are diffrent stages in this project:
 
