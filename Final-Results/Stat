@@ -1,6 +1,0 @@
-# statistical characteristics:            
-import statsmodels.api as sm
-logit = sm.Logit(y_train, X_train)  
-result=logit.fit()
-print(result.summary())                  
-print(result.conf_int())                    
